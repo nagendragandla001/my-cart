@@ -20,6 +20,10 @@ export const APP_ROUTES = [
     component: () => import("../pages/Products"),
   },
   {
+    path: "/products/:id",
+    component: () => import("../pages/ProductDetails"),
+  },
+  {
     path: "*",
     component: () => import("../pages/NotFound"),
   },

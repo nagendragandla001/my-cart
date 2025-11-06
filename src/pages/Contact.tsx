@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
 import Modal from "../components/Modal";
-import useProducts from "../hooks/useProducts";
+import { useAppSelector } from "../store/hooks";
 
 const Contact = () => {
   const modalRef = useRef<any>(null);
-  const { products } = useProducts();
+  const products = useAppSelector((state) => state.products.products);
 
   console.log("Products in Contact page:", products);
   return (

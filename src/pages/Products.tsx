@@ -1,17 +1,23 @@
-import { useState } from "react";
-import Product from "../components/Product";
+import ProductComponent from "../components/ProductComponent";
 import ErrorBoundary from "../components/ErrorBoundary";
 import useProducts from "../hooks/useProducts";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { setQuery } from "../store/reducers/productsReducer";
 
 const Products = () => {
-  const { products } = useProducts();
+  const { products, loading } = useProducts();
 
-  const [query, setQuery] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const query = useAppSelector((state) => state.products.query);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setQuery(value);
+    dispatch(setQuery(value));
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <ErrorBoundary>
@@ -28,7 +34,7 @@ const Products = () => {
           {products.map((product) => (
             <div key={product.id}>
               <ErrorBoundary>
-                <Product key={product.id} {...product} />
+                <ProductComponent key={product.id} product={product} />
               </ErrorBoundary>
             </div>
           ))}

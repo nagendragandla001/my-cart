@@ -1,8 +1,10 @@
 import { useRef, useState } from "react";
 import Search from "../components/Search";
+import { useAppSelector } from "../store/hooks";
 
 const AboutPage = () => {
   const parentRef = useRef<any>(null);
+  const user = useAppSelector((state) => state.user);
 
   const [count, setCount] = useState(0);
 
@@ -54,6 +56,9 @@ const AboutPage = () => {
           Increment Count ({count})
         </button>
       </div>
+      <pre className="mt-4 bg-gray-100 p-4 rounded">
+        {JSON.stringify(user, null, 2)}
+      </pre>
     </section>
   );
 };
