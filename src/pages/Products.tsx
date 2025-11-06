@@ -1,47 +1,17 @@
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
-// import Modal from "../components/Modal";
+import { useState } from "react";
 import Product from "../components/Product";
 import ErrorBoundary from "../components/ErrorBoundary";
+import useProducts from "../hooks/useProducts";
 
 const Products = () => {
-  const [products, setProducts] = useState<Array<any>>([]);
+  const { products } = useProducts();
+
   const [query, setQuery] = useState<string>("");
-
-  const [isPending, startTransition] = useTransition();
-
-  // const [selectedProduct, setSelectedProduct] = useState<any>(null);
-
-  // const modalRef = useRef<any>(null);
-
-  const fetchProducts = useCallback(async () => {
-    try {
-      const res = await fetch("https://fakestoreapi.com/products");
-      const data = await res.json();
-      setProducts(data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
-
-    startTransition(() => {
-      if (value.trim() === "") {
-        fetchProducts();
-      } else {
-        const filteredProducts = products.filter((product) =>
-          product.title.toLowerCase().includes(value.toLowerCase())
-        );
-        setProducts(filteredProducts);
-      }
-    });
   };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   return (
     <ErrorBoundary>
