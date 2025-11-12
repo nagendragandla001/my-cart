@@ -7,6 +7,7 @@ export interface UserState {
     lastname: string;
   };
   email: string;
+  isAuthenticated?: boolean;
 }
 
 const initialState: UserState = {
@@ -16,6 +17,7 @@ const initialState: UserState = {
     lastname: "",
   },
   email: "",
+  isAuthenticated: false,
 };
 
 export const fetchUserInfo = (id: number) => async (dispatch: any) => {
@@ -37,6 +39,7 @@ const userSlice = createSlice({
       state.name.firstname = action.payload.name.firstname;
       state.name.lastname = action.payload.name.lastname;
       state.email = action.payload.email;
+      state.isAuthenticated = true;
     },
   },
 });

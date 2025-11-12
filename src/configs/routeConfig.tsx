@@ -18,10 +18,12 @@ export const APP_ROUTES = [
   {
     path: "/products",
     component: () => import("../pages/Products"),
+    protected: true,
   },
   {
     path: "/products/:id",
     component: () => import("../pages/ProductDetails"),
+    protected: true,
   },
   {
     path: "*",

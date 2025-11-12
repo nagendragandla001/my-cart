@@ -3,6 +3,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import useProducts from "../hooks/useProducts";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setQuery } from "../store/reducers/productsReducer";
+import { Fragment } from "react/jsx-runtime";
 
 const Products = () => {
   const { products, loading } = useProducts();
@@ -32,11 +33,11 @@ const Products = () => {
         />
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-4">
           {products.map((product) => (
-            <div key={product.id}>
+            <Fragment key={product.id}>
               <ErrorBoundary>
                 <ProductComponent key={product.id} product={product} />
               </ErrorBoundary>
-            </div>
+            </Fragment>
           ))}
           {/* <Modal ref={modalRef} title={selectedProduct?.title} /> */}
         </section>

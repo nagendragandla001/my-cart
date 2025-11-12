@@ -37,7 +37,7 @@ const Login = () => {
     const id = Number(userIdRef.current?.value) || 1;
     dispatch(fetchUserInfo(id));
 
-    navigate("/");
+    navigate("/products");
   };
 
   return (
