@@ -18,6 +18,16 @@ const initialState: UserState = {
   email: "",
 };
 
+export const fetchUserInfo = (id: number) => async (dispatch: any) => {
+  try {
+    const response = await fetch(`https://fakestoreapi.com/users/${id}`);
+    const data = await response.json();
+    dispatch(setUser(data));
+  } catch (error) {
+    console.error("Failed to fetch user info:", error);
+  }
+};
+
 const userSlice = createSlice({
   name: "user",
   initialState,
