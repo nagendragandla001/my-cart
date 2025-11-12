@@ -1,14 +1,20 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { persistIntoLocalStorage } from "../utils";
+import { useAppDispatch } from "../store/hooks";
+import { fetchUserInfo } from "../store/reducers/userReducer";
 
 const Login = () => {
   const { loginUser } = useAppContext();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const userNameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const userIdRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +29,13 @@ const Login = () => {
 
     persistIntoLocalStorage("userName", userNameRef.current?.value ?? "");
     persistIntoLocalStorage("password", passwordRef.current?.value ?? "");
+
+    navigate("/");
+  };
+
+  const fetchUserHandler = async () => {
+    const id = Number(userIdRef.current?.value) || 1;
+    dispatch(fetchUserInfo(id));
 
     navigate("/");
   };
@@ -71,6 +84,33 @@ const Login = () => {
           >
             Sign In
           </button>
+        </div>
+
+        <div className="mt-4 border-t pt-4 text-center flex flex-col gap-2">
+          <h3> Login with User Id</h3>
+
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <div className="flex flex-col items-center justify-center">
+              <h2 className="font-bold text-red-600">{error}</h2>
+            </div>
+          ) : (
+            <>
+              <input
+                type="number"
+                ref={userIdRef}
+                className="border p-2 rounded w-full mt-2"
+              />
+              <button
+                className="bg-blue-500 py-2 px-4 rounded text-white cursor-pointer"
+                type="button"
+                onClick={fetchUserHandler}
+              >
+                Fetch User
+              </button>
+            </>
+          )}
         </div>
       </form>
     </div>

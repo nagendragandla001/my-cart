@@ -25,7 +25,7 @@ const ProductComponent = ({ product }: { product: Product }) => {
     <div className="border rounded-lg border-gray-300 shadow-sm hover:shadow-md transition-shadow duration-200">
       <img src={image} alt={title} className="w-full h-48 object-cover mb-4" />
       <div className="p-4">
-        <h2 className="text-lg font-bold">{title}</h2>
+        <h2 className="text-lg font-bold truncate">{title}</h2>
         <p className="text-gray-600">${price.toFixed(2)}</p>
       </div>
       <div className="flex justify-end p-4">
